@@ -1,0 +1,319 @@
+/* ============================================
+   AVES VOANDO — Design System & Styles
+   ============================================ */
+
+:root {
+    --font-main: 'Outfit', sans-serif;
+    --transition-smooth: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Reset */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: var(--font-main);
+    cursor: default;
+}
+
+/* ============================================
+   SKY — Full viewport gradient background
+   ============================================ */
+
+#sky {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        180deg,
+        #1a1a40 0%,
+        #2d2b6b 15%,
+        #4a3f8a 30%,
+        #e07850 55%,
+        #f5a962 70%,
+        #fce38a 90%
+    );
+    transition: background var(--transition-smooth);
+    overflow: hidden;
+}
+
+/* ============================================
+   CELESTIAL BODY (Sun / Moon)
+   ============================================ */
+
+#celestial-body {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff6d5 0%, #ffd97d 40%, #ff9e3d 100%);
+    box-shadow:
+        0 0 60px 20px rgba(255, 200, 80, 0.5),
+        0 0 120px 60px rgba(255, 160, 50, 0.2);
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    transition: all 1s ease;
+    z-index: 1;
+}
+
+/* ============================================
+   CLOUDS
+   ============================================ */
+
+.cloud-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 60px;
+    filter: blur(8px);
+    animation: drift-cloud linear infinite;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.cloud::before {
+    width: 60%;
+    height: 130%;
+    top: -40%;
+    left: 15%;
+}
+
+.cloud::after {
+    width: 45%;
+    height: 110%;
+    top: -25%;
+    left: 50%;
+}
+
+@keyframes drift-cloud {
+    0% { transform: translateX(-120%); }
+    100% { transform: translateX(calc(100vw + 120%)); }
+}
+
+/* Cloud depth layers */
+#clouds-far .cloud {
+    opacity: 0.15;
+    filter: blur(12px);
+}
+
+#clouds-mid .cloud {
+    opacity: 0.22;
+    filter: blur(6px);
+}
+
+#clouds-near .cloud {
+    opacity: 0.3;
+    filter: blur(3px);
+}
+
+/* ============================================
+   BIRD CANVAS
+   ============================================ */
+
+#bird-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* ============================================
+   OVERLAY UI
+   ============================================ */
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    pointer-events: none;
+    animation: fade-in-overlay 2s ease forwards;
+}
+
+@keyframes fade-in-overlay {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+#title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow:
+        0 2px 20px rgba(0, 0, 0, 0.3),
+        0 0 60px rgba(255, 180, 80, 0.3);
+    letter-spacing: 0.05em;
+    animation: title-float 6s ease-in-out infinite;
+}
+
+@keyframes title-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+#subtitle {
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+    animation: subtitle-pulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes subtitle-pulse {
+    0% { opacity: 0.5; }
+    100% { opacity: 0.85; }
+}
+
+/* ============================================
+   CONTROLS
+   ============================================ */
+
+#time-control, #bird-control {
+    position: absolute;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 14px 20px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0.6;
+}
+
+#time-control {
+    bottom: 30px;
+    right: 30px;
+}
+
+#bird-control {
+    bottom: 30px;
+    left: 30px;
+}
+
+#time-control:hover, #bird-control:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+#time-label, #bird-label {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Custom range slider */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 140px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.5);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    border: none;
+}
+
+/* ============================================
+   STARS (night mode particles)
+   ============================================ */
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    z-index: 1;
+    animation: twinkle 3s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.2; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 600px) {
+    #time-control, #bird-control {
+        bottom: 16px;
+        padding: 10px 14px;
+    }
+
+    #time-control { right: 12px; }
+    #bird-control { left: 12px; }
+
+    input[type="range"] {
+        width: 100px;
+    }
+}
