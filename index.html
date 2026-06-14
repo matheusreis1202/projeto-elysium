@@ -23,25 +23,47 @@
         <!-- Bird canvas -->
         <canvas id="bird-canvas"></canvas>
 
-        <!-- Overlay UI -->
-        <div id="overlay">
-            <h1 id="title">Aves Voando</h1>
-            <p id="subtitle">Observe o voo livre</p>
+        <!-- Auth Login Overlay -->
+        <div id="login-container" class="glass-panel active">
+            <h2 id="login-title">Acesso Restrito</h2>
+            <p id="login-subtitle">Faça login para observar o voo livre</p>
+            
+            <form id="auth-form">
+                <input type="email" id="email" placeholder="Seu melhor e-mail" required>
+                <input type="password" id="password" placeholder="Senha" required>
+                
+                <div id="auth-error" class="error-msg"></div>
+                <div id="auth-success" class="success-msg"></div>
+                
+                <button type="submit" id="submit-btn">Entrar</button>
+            </form>
+            
+            <p class="auth-toggle">Ainda não tem conta? <span id="toggle-auth-mode">Cadastre-se</span></p>
         </div>
 
-        <!-- Time control -->
-        <div id="time-control">
+        <!-- Overlay UI (Hidden until authenticated) -->
+        <div id="overlay" class="hidden">
+            <h1 id="title">Aves Voando</h1>
+            <p id="subtitle">Observe o voo livre</p>
+            <button id="logout-btn" class="secondary-btn">Sair</button>
+        </div>
+
+        <!-- Time control (Hidden until authenticated) -->
+        <div id="time-control" class="hidden">
             <label for="time-slider" id="time-label">Hora do dia</label>
             <input type="range" id="time-slider" min="0" max="100" value="35">
         </div>
 
-        <!-- Bird count -->
-        <div id="bird-control">
+        <!-- Bird count (Hidden until authenticated) -->
+        <div id="bird-control" class="hidden">
             <label for="bird-slider" id="bird-label">Aves: <span id="bird-count">25</span></label>
             <input type="range" id="bird-slider" min="5" max="80" value="25">
         </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>
